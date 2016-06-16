@@ -16,4 +16,12 @@ parameters:
     mailer_password:   ~
 
     # A secret key that's used to generate certain security-related tokens
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            ChangeMySuperSecretYoloo!
+
+    web_firstName: 'First Name'
+    web_lastName: 'Last Name'
+    web_company: 'Company Name'
+    web_copyright: 2016
+    web_city: 'Company city'
+    web_phone: 'Company phone'
+    web_email: 'contact@company.com'
