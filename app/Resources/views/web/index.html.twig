@@ -1,0 +1,153 @@
+{% extends 'base_unify.html.twig' %}
+
+{% block content %}
+	<section id="body" class="about-section" style="background: url({{ asset('unify/img/img1.jpg') }}) no-repeat center fixed; background-size: cover;">
+		<div class="container padding-top-60">
+			<div class="col-md-2">
+				<img class="img-responsive" src="{{ asset('unify/img/logo.png') }}" alt="Logo - 6 Pierres Paysagères" style="margin:0 auto;">
+			</div>
+			<div class="col-md-8">
+				<div class="title-v1">
+					<h1>{{ web_company }}</h1>
+					<p>Le plaisir de réaliser vos projets extérieurs avec un professionnel.
+						<br><small><strong>{{ web_firstName ~ ' ' ~ web_lastName }}</strong></small></p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="expertise">
+		<div class="bg-color-light">
+			<div class="container content-lg">
+				<div class="title-v1">
+					<h2>Un artisan polyvalent</h2>
+					<p>De la <strong>conception</strong> à la <strong>réalisation</strong>, votre <strong>Paysagiste</strong> spécialisé en <strong>Maçonnerie paysagère</strong>
+					<br>dans l'<strong>Eure et Loir</strong> saura vous <strong>conseiller</strong> dans vos projets d'<strong>aménagements extérieurs</strong>.</p>
+				</div>
+				<div class="row">
+					<div class="col-md-4 content-boxes-v3 padding-top-20">
+						<div class="clearfix margin-bottom-30">
+							<i class="icon-custom icon-md rounded-x icon-bg-u icon-line fa fa-university"></i>
+							<div class="content-boxes-in-v3">
+								<h2 class="heading-sm">Maçonnerie Paysagère</h2>
+								<p>Du simple dallage à une création artistique de qualité, nous serons à l'écoute pour réaliser au mieux vos envies.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 content-boxes-v3 padding-top-20">
+						<div class="clearfix margin-bottom-30">
+							<i class="icon-custom icon-md rounded-x icon-bg-u icon-line icon-directions"></i>
+							<div class="content-boxes-in-v3">
+								<h2 class="heading-sm">Aménagement en Bois</h2>
+								<p>Une pallissade, un escalier, une terrasse ou une piscine ? Notre paysagiste vous accompagnera dans vos projets.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 content-boxes-v3 padding-top-20">
+						<div class="clearfix margin-bottom-30">
+							<i class="icon-custom icon-md rounded-x icon-bg-u icon-line fa fa-tree"></i>
+							<div class="content-boxes-in-v3">
+								<h2 class="heading-sm">Entretien de Parcs et Jardins</h2>
+								<p>Nous mettrons un point d'honneur à vous fournir un travail soigné sur vos gazons, massifs et jardins fleuris.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="portfolio" style="background: url({{ asset('unify/img/img2.jpg') }}) no-repeat center fixed; background-size: cover;">
+		<div class="container content-lg">
+			<div class="title-v1">
+				<h2>Réalisations</h2>
+				<p>Nous privilégions l'<strong>esthétisme</strong>, la <strong>fonctionnalité</strong> et la <strong>qualité</strong>
+				<br>répondre à <strong>vos besoins</strong> est pour nous une <strong>priorité</strong></p>
+			</div>
+			{# Todo: List of projects #}
+		</div>
+	</section>
+	<section id="contact" class="contacts-section2 bg-color-light">
+		<div class="container content">
+			<div class="title-v1">
+				<h2>Contactez Moi</h2>
+				<p>Au-delà de l'entretien des jardins, je pratique la maçonnerie paysagère,
+				<br>le béton décoratif, la pose de dallages, clôtures et portails.</p>
+			</div>
+			<div class="row">
+				<div class="col-md-8 col-sm-6">
+					<form action="contact.php" method="post" name="contact" class="sky-form contact-style">
+						<fieldset>
+							<div class="row margin-bottom-20">
+								<div class="col-md-6 col-md-offset-0">
+									<div>
+										<div class="form-group">
+											<input type="text" name="firstname" class="form-control" placeholder="Prénom">
+											<span class="text-danger" name="error_message"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-md-offset-0">
+									<div>
+										<div class="form-group">
+											<input type="text" name="lastname" class="form-control" placeholder="Nom">
+											<span class="text-danger" name="error_message"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row margin-bottom-30">
+								<div class="col-md-6 col-md-offset-0">
+									<div>
+										<div class="form-group">
+											<input type="text" name="email" class="form-control" placeholder="Email">
+											<span class="text-danger" name="error_message"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-md-offset-0">
+									<div>
+										<div class="form-group">
+											<input type="text" name="phone" class="form-control" placeholder="Téléphone">
+											<span class="text-danger" name="error_message"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row margin-bottom-20">
+								<div class="col-md-12 col-md-offset-0">
+									<div>
+										<div class="form-group">
+											<textarea rows="8" name="message" class="form-control" placeholder="Description du projet"></textarea>
+											<span class="text-danger" name="error_message"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<p><button type="submit" class="btn-u">Envoyer</button></p>
+						</fieldset>
+						<p name="success" style="display:none"><strong>Message envoyé avec succès.</strong><br>Nous prendrons contact avec vous dans les plus brefs délais.</p>
+					</form>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<p class="padding-bottom-10">Vous avez besoin de plus d'informations ? <br>Contacter moi pour toutes vos questions.</p>
+					<ul class="list-unstyled">
+						<li class="padding-bottom-10">
+							<i class="icon-custom icon-sm rounded-x icon-color-u fa fa-home"></i>
+							<h6>Lieu d'activité</h6>
+							<p>50 km autour de <a href="https://www.google.fr/maps/place/Saint-Denis-d'Authou/" target="_blank">{{ web_city }}</a></p>
+						</li>
+						<li class="padding-bottom-10">
+							<i class="icon-custom icon-sm rounded-x icon-color-u fa fa-phone"></i>
+							<h6>Téléphone</h6>
+							<p>{{ web_phone }}</p>
+						</li>
+						<li class="padding-bottom-10">
+							<i class="icon-custom icon-sm rounded-x icon-color-u fa fa-envelope"></i>
+							<h6>Email</h6>
+							<a href="mailto:contact@6pierrespaysageres.fr" class="link-black">{{ web_email }}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

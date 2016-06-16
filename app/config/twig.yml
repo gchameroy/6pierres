@@ -1,0 +1,9 @@
+twig:
+    globals:
+        web_firstName: %web_firstName%
+        web_lastName: %web_lastName%
+        web_company: %web_company%
+        web_copyright: %web_copyright%
+        web_city: %web_city%
+        web_phone: %web_phone%
+        web_email: %web_email%
