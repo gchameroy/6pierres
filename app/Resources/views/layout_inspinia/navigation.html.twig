@@ -6,7 +6,7 @@
             </li>
             {% if is_granted('ROLE_ADMIN') %}
 			
-			{% else if is_granted('ROLE_USER') %}
+			{% elseif is_granted('ROLE_USER') %}
 
             {% endif %}
         </ul>
