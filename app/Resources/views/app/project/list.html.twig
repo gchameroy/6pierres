@@ -28,7 +28,10 @@
             <div class="col-lg-7">
                 <div class="ibox">
 					<div class="ibox-title">
-						<h2>{{ 'projects.title.description'|trans }}</h2>
+						<h5>{{ 'projects.title.description'|trans }}</h5>
+						<div class="ibox-tools">
+							<a class="btn btn-primary btn-xs action_project_add">{{ 'project.action.add.label'|trans }}</a>
+						</div>
 					</div>
                     <div class="ibox-content">
 						<div class="project-list">
@@ -39,6 +42,7 @@
 											<td>
 												<span class="label label-primary">{{ 'project.status.active.label'|trans }}</span>
 											</td>
+											<td>[First Photo]</td>
 											<td>
 												<a href="#">{{ project.name }}</a>
 												<br><small>project.completedAt.label </small>
