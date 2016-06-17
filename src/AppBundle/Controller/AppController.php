@@ -21,6 +21,12 @@ class AppController extends Controller
      */
     public function projectListAction(Request $request)
     {
-        return $this->render('app/project/list.html.twig');
+		$projects = $this->getDoctrine()->getManager()
+			->getRepository('AppBundle:Project')
+			->findAll();
+
+        return $this->render('app/project/list.html.twig', array(
+			'projects' => $projects
+		));
     }
 }
