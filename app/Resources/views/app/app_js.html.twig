@@ -1,0 +1,21 @@
+<script>
+    $('.action_project_add').click(function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        $button = $('#modals > button[data-target="#modal_action_project_add"]');
+        if($button.length > 0){
+            $button.click();
+            return;
+        }
+
+        modal = $.get("{{ path('app_project_modal_add') }}", function(modal){
+            $modal = $(modal);
+            button = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_action_project_add" style="display:none"></button>';
+            $button = $(button);
+            $modal.attr('id', 'modal_action_project_add');
+            $('#modals').append($button);
+            $('#modals').append($modal);
+            $button.click();
+        });
+    })
+</script>
