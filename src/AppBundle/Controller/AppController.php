@@ -13,8 +13,14 @@ class AppController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('app/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
-        ]);
+        return $this->render('app/index.html.twig');
+    }
+	
+	/**
+     * @Route("/management/projects", name="app_project_list")
+     */
+    public function projectListAction(Request $request)
+    {
+        return $this->render('app/project/list.html.twig');
     }
 }
