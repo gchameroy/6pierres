@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use AppBundle\Form\Type\ProjectInsertType;
 
@@ -25,7 +26,7 @@ class AppController extends Controller
     {
 		$projects = $this->getDoctrine()->getManager()
 			->getRepository('AppBundle:Project')
-			->findAll();
+			->findAllOrdered();
 
         return $this->render('app/project/list.html.twig', array(
 			'projects' => $projects
@@ -58,5 +59,27 @@ class AppController extends Controller
         return $this->render('app/project/modal/add.html.twig', array(
             'form' => $form->createView()
         ));
+    }
+	
+	/**
+     * @Route("/management/projects/ajax/order", name="app_project_ajax_order")
+     */
+    public function projectAjaxOrderAction(Request $request)
+    {
+		$projects = json_decode($request->request->get('projects'));
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('AppBundle:Project');
+		foreach($projects As $order => $id){
+			$project = $repository->findOneById($id);
+			$project->setOrder($order + 1);
+			$em->persist($project);
+		}
+		$em->flush();
+
+		$response = new JsonResponse();
+		$response->setData(array(
+			'valid' => true
+		));
+		return $response;
     }
 }
