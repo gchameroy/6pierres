@@ -35,27 +35,24 @@
 					</div>
                     <div class="ibox-content">
 						<div class="project-list">
-							<ul class="sortable-list connectList agile-list ui-sortable">
+							<ul class="sortable-list connectList agile-list ui-sortable" name="projects">
 								{% for project in projects %}
-									<li data-id_project="{{ project.id }}">
+									<li id="{{ project.id }}" data-id_project="{{ project.id }}">
 										<div class="row">
-											<div class="col-sm-1 text-center" name="order">
-												# {{ loop.index }}
-											</div>
-											<div class="col-sm-1 text-left">
+											<div class="col-lg-1 text-left">
 												<span class="label label-primary">Exposé</span>
 											</div>
-											<div class="col-sm-1 text-center">
+											<div class="col-lg-1 text-center">
 												[Photo]
 											</div>
-											<div class="col-sm-5">
+											<div class="col-lg-6">
 												<a href="#">{{ project.name }}</a>
 												<br><small>project.completedAt.label </small>
 											</div>
-											<div class="col-sm-2 text-center">
+											<div class="col-lg-2 text-center">
 												[nb] photos
 											</div>
-											<div class="col-sm-2 text-right">
+											<div class="col-lg-2 text-right">
 												<div class="btn-group">
 													<a href="#" class="btn btn-white btn-sm">
 														<i class="fa fa-eye"></i>
@@ -73,4 +70,15 @@
             </div>
         </div>
     </div>
+	<script>
+        $(document).ready(function(){
+            $('[name="projects"]').sortable({
+                connectWith: '.connectList',
+                update: function( event, ui ) {
+                    var projects = $('[name="projects"]').sortable('toArray');
+					console.log(window.JSON.stringify(projects));
+                }
+            }).disableSelection();
+        });
+    </script>
 {% endblock %}
