@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class ProjectRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findAllOrdered(){
+		return $this->getEntityManager()
+			->createQuery(
+				'Select p
+				From AppBundle:Project p
+				Order By p.orderId'
+			)
+			->getResult()
+		;
+	}
 }

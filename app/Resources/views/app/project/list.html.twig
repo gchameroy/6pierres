@@ -75,7 +75,25 @@
             $('[name="projects"]').sortable({
                 connectWith: '.connectList',
                 update: function( event, ui ) {
-                    var projects = $('[name="projects"]').sortable('toArray');
+                    var projects = window.JSON.stringify($('[name="projects"]').sortable('toArray'));
+					$.ajax({
+						type: 'post',
+						dataType: 'json',
+						url: '{{ path('app_project_ajax_order') }}',
+						data:{
+							projects: projects
+						},
+						success: function(response){
+							if(!response.valid){
+								swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: ' + response.code, 'error');
+								return;
+							}
+							console.log('Success: ' + response.valid);
+						},
+						error: function(){
+							swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: VPL01', 'error');
+						}
+					});
 					console.log(window.JSON.stringify(projects));
                 }
             }).disableSelection();
