@@ -35,38 +35,38 @@
 					</div>
                     <div class="ibox-content">
 						<div class="project-list">
-							<table class="table table-hover">
-								<tbody>
-									{% for project in projects %}
-										<tr>
-											<td>
-												<span class="label label-primary">{{ 'project.status.active.label'|trans }}</span>
-											</td>
-											<td>[First Photo]</td>
-											<td>
+							<ul class="sortable-list connectList agile-list ui-sortable">
+								{% for project in projects %}
+									<li data-id_project="{{ project.id }}">
+										<div class="row">
+											<div class="col-sm-1 text-center" name="order">
+												# {{ loop.index }}
+											</div>
+											<div class="col-sm-1 text-left">
+												<span class="label label-primary">Exposé</span>
+											</div>
+											<div class="col-sm-1 text-center">
+												[Photo]
+											</div>
+											<div class="col-sm-5">
 												<a href="#">{{ project.name }}</a>
 												<br><small>project.completedAt.label </small>
-											</td>
-											<td>[Nb] project.photos.number</td>
-											<td class="text-right">
+											</div>
+											<div class="col-sm-2 text-center">
+												[nb] photos
+											</div>
+											<div class="col-sm-2 text-right">
 												<div class="btn-group">
-													<a href="" class="btn btn-white btn-sm">
-														<i class="fa fa-folder"></i>
-														{{ 'project.action.view.label'|trans }}
+													<a href="#" class="btn btn-white btn-sm">
+														<i class="fa fa-eye"></i>
+														Détails
 													</a>
 												</div>
-											</td>
-										</tr>
-									{% endfor %}
-								</tbody>
-								<tfoot>
-									<tr>
-										<td colspan="7">
-											<ul class="pagination pull-right"></ul>
-										</td>
-									</tr>
-								</tfoot>
-							</table>
+											</div>
+										</div>
+									</li>
+								{% endfor %}
+							</ul>
 						</div>
                     </div>
                 </div>
