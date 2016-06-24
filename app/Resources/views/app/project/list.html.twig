@@ -35,42 +35,68 @@
 					</div>
                     <div class="ibox-content">
 						<div class="project-list">
-							<table class="table table-hover">
-								<tbody>
-									{% for project in projects %}
-										<tr>
-											<td>
-												<span class="label label-primary">{{ 'project.status.active.label'|trans }}</span>
-											</td>
-											<td>[First Photo]</td>
-											<td>
+							<ul class="sortable-list connectList agile-list ui-sortable" name="projects">
+								{% for project in projects %}
+									<li id="{{ project.id }}" data-id_project="{{ project.id }}">
+										<div class="row">
+											<div class="col-lg-1 text-left">
+												<span class="label label-primary">Exposé</span>
+											</div>
+											<div class="col-lg-1 text-center">
+												[Photo]
+											</div>
+											<div class="col-lg-6">
 												<a href="#">{{ project.name }}</a>
 												<br><small>project.completedAt.label </small>
-											</td>
-											<td>[Nb] project.photos.number</td>
-											<td class="text-right">
+											</div>
+											<div class="col-lg-2 text-center">
+												[nb] photos
+											</div>
+											<div class="col-lg-2 text-right">
 												<div class="btn-group">
-													<a href="" class="btn btn-white btn-sm">
-														<i class="fa fa-folder"></i>
-														{{ 'project.action.view.label'|trans }}
+													<a href="#" class="btn btn-white btn-sm">
+														<i class="fa fa-eye"></i>
+														Détails
 													</a>
 												</div>
-											</td>
-										</tr>
-									{% endfor %}
-								</tbody>
-								<tfoot>
-									<tr>
-										<td colspan="7">
-											<ul class="pagination pull-right"></ul>
-										</td>
-									</tr>
-								</tfoot>
-							</table>
+											</div>
+										</div>
+									</li>
+								{% endfor %}
+							</ul>
 						</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+	<script>
+        $(document).ready(function(){
+            $('[name="projects"]').sortable({
+                connectWith: '.connectList',
+                update: function( event, ui ) {
+                    var projects = window.JSON.stringify($('[name="projects"]').sortable('toArray'));
+					$.ajax({
+						type: 'post',
+						dataType: 'json',
+						url: '{{ path('app_project_ajax_order') }}',
+						data:{
+							projects: projects
+						},
+						success: function(response){
+							if(!response.valid){
+								swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: ' + response.code, 'error');
+								return;
+							}
+							console.log('Success: ' + response.valid);
+						},
+						error: function(){
+							swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: VPL01', 'error');
+						}
+					});
+					console.log(window.JSON.stringify(projects));
+                }
+            }).disableSelection();
+        });
+    </script>
 {% endblock %}
