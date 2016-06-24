@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <title>{% block title '' %}</title>
+
+            {# Main Styles #}
+            {% block main_css %}
+                {% include 'layout_inspinia/main_css.html.twig' only %}
+            {% endblock %}
+
+            {# Custom Styles #}
+            {% block custom_css %}{% endblock %}
+
+            <script src="{{ asset('inspinia/js/jquery-2.1.1.js') }}"></script>
+            <script src="{{ asset('inspinia/js/jquery-ui-1.10.4.min.js') }}"></script>
+        {% endblock %}
+    </head>
+
+    {% block body %}
+        <body>
+            <div id="modals"></div>
+
+            <div id="wrapper">
+                {# Main navigation #}
+                {% block navigation %}
+                    {% include 'layout_inspinia/navigation.html.twig' only %}
+                {% endblock %}
+                <div id="page-wrapper" class="gray-bg">
+                    {% block navbar %}
+                        {% include 'layout_inspinia/navbar.html.twig' only %}
+                    {% endblock %}
+                    {% block nav %}{% endblock %}
+                    {% block content %}{% endblock %}
+                    {% block footer %}
+                        {% include 'layout_inspinia/footer.html.twig' only %}
+                    {% endblock %}
+                </div>
+            </div>
+
+            {# Mainly scripts #}
+            {% block main_js %}
+                {% include 'layout_inspinia/main_js.html.twig' only %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% include 'office/office_js.html.twig' only %}
+                {% elseif is_granted('ROLE_USER') %}
+					{% include 'app/app_js.html.twig' only %}
+				{% endif %}
+            {% endblock %}
+        </body>
+    {% endblock %}
+</html>

@@ -1,0 +1,102 @@
+{% extends 'base_inspinia.html.twig' %}
+
+{% block title 'Management - Projects' %}
+
+{% block nav %}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>{{ 'projects.title.description'|trans }}</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('app') }}">{{ 'app.title.label'|trans }}</a>
+                </li>
+                <li class="active">
+                    <strong>{{ 'projects.title.label'|trans }}</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+            <div class="title-action">
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper wrapper-content  animated fadeInRight">
+		<div class="row">
+            <div class="col-lg-7">
+                <div class="ibox">
+					<div class="ibox-title">
+						<h5>{{ 'projects.title.description'|trans }}</h5>
+						<div class="ibox-tools">
+							<a class="btn btn-primary btn-xs action_project_add">{{ 'project.action.add.label'|trans }}</a>
+						</div>
+					</div>
+                    <div class="ibox-content">
+						<div class="project-list">
+							<ul class="sortable-list connectList agile-list ui-sortable" name="projects">
+								{% for project in projects %}
+									<li id="{{ project.id }}" data-id_project="{{ project.id }}">
+										<div class="row">
+											<div class="col-lg-1 text-left">
+												<span class="label label-primary">Exposé</span>
+											</div>
+											<div class="col-lg-1 text-center">
+												[Photo]
+											</div>
+											<div class="col-lg-6">
+												<a href="#">{{ project.name }}</a>
+												<br><small>project.completedAt.label </small>
+											</div>
+											<div class="col-lg-2 text-center">
+												[nb] photos
+											</div>
+											<div class="col-lg-2 text-right">
+												<div class="btn-group">
+													<a href="#" class="btn btn-white btn-sm">
+														<i class="fa fa-eye"></i>
+														Détails
+													</a>
+												</div>
+											</div>
+										</div>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<script>
+        $(document).ready(function(){
+            $('[name="projects"]').sortable({
+                connectWith: '.connectList',
+                update: function( event, ui ) {
+                    var projects = window.JSON.stringify($('[name="projects"]').sortable('toArray'));
+					$.ajax({
+						type: 'post',
+						dataType: 'json',
+						url: '{{ path('app_project_ajax_order') }}',
+						data:{
+							projects: projects
+						},
+						success: function(response){
+							if(!response.valid){
+								swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: ' + response.code, 'error');
+								return;
+							}
+							console.log('Success: ' + response.valid);
+						},
+						error: function(){
+							swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: VPL01', 'error');
+						}
+					});
+					console.log(window.JSON.stringify(projects));
+                }
+            }).disableSelection();
+        });
+    </script>
+{% endblock %}
