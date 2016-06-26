@@ -26,7 +26,10 @@ class AppController extends Controller
     {
 		$projects = $this->getDoctrine()->getManager()
 			->getRepository('AppBundle:Project')
-			->findAllOrdered();
+			->findBy(
+				array(),
+				array('orderId' => 'ASC')
+			);
 
         return $this->render('app/project/list.html.twig', array(
 			'projects' => $projects
@@ -81,5 +84,20 @@ class AppController extends Controller
 			'valid' => true
 		));
 		return $response;
+    }
+	
+	/**
+     * @Route("/management/projects/ajax/view", name="app_project_ajax_view")
+     */
+    public function projectViewAction(Request $request)
+    {
+		$id = $request->request->get('id');
+		$project = $this->getDoctrine()->getManager()
+			->getRepository('AppBundle:Project')
+			->findOneById($id);
+
+		return $this->render('app/project/ajax/view.html.twig', array(
+			'project' => $project
+		));
     }
 }
