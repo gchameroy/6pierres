@@ -25,7 +25,7 @@
 {% block content %}
     <div class="wrapper wrapper-content  animated fadeInRight">
 		<div class="row">
-            <div class="col-lg-7">
+            <div class="col-xs-7">
                 <div class="ibox">
 					<div class="ibox-title">
 						<h5>{{ 'projects.title.description'|trans }}</h5>
@@ -37,7 +37,7 @@
 						<div class="project-list">
 							<ul class="sortable-list connectList agile-list ui-sortable" name="projects">
 								{% for project in projects %}
-									<li id="{{ project.id }}" data-id_project="{{ project.id }}">
+									<li name="project_view" id="{{ project.id }}" data-id_project="{{ project.id }}">
 										<div class="row">
 											<div class="col-lg-1 text-left">
 												<span class="label label-primary">Exposé</span>
@@ -46,15 +46,14 @@
 												[Photo]
 											</div>
 											<div class="col-lg-6">
-												<a href="#">{{ project.name }}</a>
-												<br><small>project.completedAt.label </small>
+												<a>{{ project.name }}</a>
 											</div>
 											<div class="col-lg-2 text-center">
 												[nb] photos
 											</div>
 											<div class="col-lg-2 text-right">
 												<div class="btn-group">
-													<a href="#" class="btn btn-white btn-sm">
+													<a class="btn btn-white btn-sm">
 														<i class="fa fa-eye"></i>
 														Détails
 													</a>
@@ -68,10 +67,28 @@
                     </div>
                 </div>
             </div>
+			{# Chargé en ajax: path('app_project_ajax_view') #}
+			<div class="col-xs-5" id="project_view"></div>
         </div>
     </div>
 	<script>
         $(document).ready(function(){
+            $('[name="project_view"]').click(function(){
+				var id = $(this).closest('[data-id_project]').attr('data-id_project');
+				$.ajax({
+					type: 'post',
+					url: '{{ path('app_project_ajax_view') }}',
+					data:{
+						id: id
+					},
+					success: function(response){
+						$('#project_view').html(response);
+					},
+					error: function(){
+						swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: VPL02', 'error');
+					}
+				});
+			});
             $('[name="projects"]').sortable({
                 connectWith: '.connectList',
                 update: function( event, ui ) {
@@ -88,13 +105,11 @@
 								swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: ' + response.code, 'error');
 								return;
 							}
-							console.log('Success: ' + response.valid);
 						},
 						error: function(){
 							swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: VPL01', 'error');
 						}
 					});
-					console.log(window.JSON.stringify(projects));
                 }
             }).disableSelection();
         });
