@@ -22,16 +22,17 @@ class LoadProject extends AbstractFixture implements OrderedFixtureInterface, Co
 
     public function getOrder()
     {
-        return 1;
+        return 2;
     }
 
     public function load(ObjectManager $manager)
     {
 		for($i=1; $i<=9; $i++){
 			$project = $this->container->get('app.project.factory')->create()
-				->setName('Project No. ' . $i)
+				->setName('Projet N° ' . $i)
 				->setCompletedAt(new \DateTime())
-				->setOrder(10 - $i);
+				->setOrder(10 - $i)
+				->setPhoto($this->getReference('photo-' . $i . '-cover'));
 			$manager->persist($project);
 			$this->addReference('project-' . $i, $project);
 		}
