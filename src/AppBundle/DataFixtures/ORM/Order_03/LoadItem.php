@@ -22,21 +22,21 @@ class LoadItem extends AbstractFixture implements OrderedFixtureInterface, Conta
 
     public function getOrder()
     {
-        return 2;
+        return 3;
     }
 
     public function load(ObjectManager $manager)
     {
         $projects = array(
-            '01' => array('cover','01','02'),
-            '02' => array('cover','01','02','03'),
-            '03' => array('cover','01','02','03'),
-            '04' => array('cover','01','02','03','04'),
-            '05' => array('cover','01','02'),
-            '06' => array('cover','01','02','03','04','05'),
-            '07' => array('cover','01','02','03','04','05'),
-            '08' => array('cover','01','02','03'),
-            '09' => array('cover','01')
+            1 => array(1, 2),
+            2 => array(1, 2),
+            3 => array(1, 2, 3),
+            4 => array(1, 2, 3, 4),
+            5 => array(1, 2),
+            6 => array(1, 2, 3, 4, 5),
+            7 => array(1, 2, 3, 4, 5),
+            8 => array(1, 2, 3),
+            9 => array(1)
         );
         
         $i = 1;
@@ -44,11 +44,11 @@ class LoadItem extends AbstractFixture implements OrderedFixtureInterface, Conta
             foreach($photos As $path){
                 $path = $path == 'cover' ? $path : (int) $path;
                 $item = $this->container->get('app.item.factory')->create()
-                    ->setPhoto($this->getReference('photo-'.(int) $id_project.'-'.$path))
-                    ->setProject($this->getReference('project-'.(int) $id_project));
+                    ->setPhoto($this->getReference('photo-' . $id_project . '-' . $path))
+                    ->setProject($this->getReference('project-' . $id_project));
                 $manager->persist($item);
                 $manager->flush();
-                $this->addReference('item-'.(int) $i, $item);
+                $this->addReference('item-' . $i, $item);
                 $i++;
             }
         }

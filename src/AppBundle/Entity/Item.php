@@ -26,6 +26,13 @@ class Item
     * @ORM\JoinColumn(nullable=false)
     */
     private $photo;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="added_at", type="datetime")
+     */
+    private $addedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="Project", inversedBy="projects", cascade={"persist"})
@@ -90,5 +97,29 @@ class Item
     public function getProject()
     {
         return $this->project;
+    }
+
+    /**
+     * Set addedAt
+     *
+     * @param \DateTime $addedAt
+     *
+     * @return Item
+     */
+    public function setAddedAt($addedAt)
+    {
+        $this->addedAt = $addedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get addedAt
+     *
+     * @return \DateTime
+     */
+    public function getAddedAt()
+    {
+        return $this->addedAt;
     }
 }

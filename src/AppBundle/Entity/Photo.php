@@ -34,6 +34,13 @@ class Photo
      * @ORM\Column(name="size", type="bigint")
      */
     private $size;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="added_at", type="datetime")
+     */
+    private $addedAt;
 
 
     /**
@@ -92,5 +99,44 @@ class Photo
     public function getSize()
     {
         return $this->size;
+    }
+    
+    public function getWebPath()
+    {
+        return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
+    }
+
+    private function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    private function getUploadDir()
+    {
+        return 'uploads';
+    }
+
+    /**
+     * Set addedAt
+     *
+     * @param \DateTime $addedAt
+     *
+     * @return Photo
+     */
+    public function setAddedAt($addedAt)
+    {
+        $this->addedAt = $addedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get addedAt
+     *
+     * @return \DateTime
+     */
+    public function getAddedAt()
+    {
+        return $this->addedAt;
     }
 }

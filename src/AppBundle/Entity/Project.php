@@ -55,10 +55,10 @@ class Project
     private $items;
     
     /**
-    * @ORM\OneToOne(targetEntity="Item", cascade={"persist"})
+    * @ORM\OneToOne(targetEntity="Photo", cascade={"persist"})
     * @ORM\JoinColumn(nullable=true)
     */
-    private $itemCover;
+    private $photo;
 
 
     /**
@@ -233,26 +233,26 @@ class Project
     }
 
     /**
-     * Set itemCover
+     * Set photo
      *
-     * @param \AppBundle\Entity\Item $itemCover
+     * @param \AppBundle\Entity\Photo $photo
      *
      * @return Project
      */
-    public function setItemCover(Item $itemCover = null)
+    public function setPhoto(Photo $photo = null)
     {
-        $this->itemCover = $itemCover;
+        $this->photo = $photo;
 
         return $this;
     }
 
     /**
-     * Get itemCover
+     * Get photo
      *
-     * @return \AppBundle\Entity\Item
+     * @return \AppBundle\Entity\Photo
      */
-    public function getItemCover()
+    public function getPhoto()
     {
-        return $this->itemCover;
+        return $this->photo;
     }
 }
