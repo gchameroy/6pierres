@@ -3,3 +3,7 @@ services:
       class: AppBundle\Entity\UserFactory
     app.project.factory:
       class: AppBundle\Entity\ProjectFactory
+    app.photo.factory:
+      class: AppBundle\Entity\PhotoFactory
+    app.item.factory:
+      class: AppBundle\Entity\ItemFactory
