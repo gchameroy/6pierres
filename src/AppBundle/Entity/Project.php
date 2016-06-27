@@ -48,6 +48,17 @@ class Project
      * @ORM\Column(name="added_at", type="datetime")
      */
     private $addedAt;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="project", cascade={"persist"})
+     */
+    private $items;
+    
+    /**
+    * @ORM\OneToOne(targetEntity="Item", cascade={"persist"})
+    * @ORM\JoinColumn(nullable=true)
+    */
+    private $itemCover;
 
 
     /**
@@ -155,5 +166,93 @@ class Project
     {
         return $this->addedAt;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->items = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Set orderId
+     *
+     * @param integer $orderId
+     *
+     * @return Project
+     */
+    public function setOrderId($orderId)
+    {
+        $this->orderId = $orderId;
+
+        return $this;
+    }
+
+    /**
+     * Get orderId
+     *
+     * @return integer
+     */
+    public function getOrderId()
+    {
+        return $this->orderId;
+    }
+
+    /**
+     * Add item
+     *
+     * @param \AppBundle\Entity\Item $item
+     *
+     * @return Project
+     */
+    public function addItem(Item $item)
+    {
+        $this->items[] = $item;
+
+        return $this;
+    }
+
+    /**
+     * Remove item
+     *
+     * @param \AppBundle\Entity\Item $item
+     */
+    public function removeItem(Item $item)
+    {
+        $this->items->removeElement($item);
+    }
+
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+
+    /**
+     * Set itemCover
+     *
+     * @param \AppBundle\Entity\Item $itemCover
+     *
+     * @return Project
+     */
+    public function setItemCover(Item $itemCover = null)
+    {
+        $this->itemCover = $itemCover;
+
+        return $this;
+    }
+
+    /**
+     * Get itemCover
+     *
+     * @return \AppBundle\Entity\Item
+     */
+    public function getItemCover()
+    {
+        return $this->itemCover;
+    }
+}
