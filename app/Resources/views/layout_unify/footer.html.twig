@@ -1,0 +1,17 @@
+<section class="footer-simple">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-sm-4 col-xs-5">
+				<p>
+					{{ web_copyright }}
+					{% if web_copyright < "now"|date("Y") %}
+						- {{ "now"|date("Y") }}
+					{% endif %}
+					&copy; Tous droits réservés. <a>{{ web_firstName }} {{ web_lastName }}</a> - {{ web_company }}</p>
+			</div>
+			<div class="col-md-6 col-sm-8 col-xs-7 text-right pull-right">
+				<p class="pull-right">Designed by <a href="http://geoffrey-chameroy.fr" target="_blank">Geoffrey Chameroy</a></p>
+			</div>
+		</div>
+	</div>
+</section>
