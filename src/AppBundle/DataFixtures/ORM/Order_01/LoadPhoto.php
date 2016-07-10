@@ -41,10 +41,8 @@ class LoadPhoto extends AbstractFixture implements OrderedFixtureInterface, Cont
         
         foreach($projects As $id_project => $photos){
             foreach($photos As $path){
-                $size = $path == 'cover' ? 20000 : 100000;
                 $photo = $this->container->get('app.photo.factory')->create()
-                    ->setPath($id_project . '-' . $path . '.jpg')
-                    ->setSize($size);
+                    ->setFile($id_project . '-' . $path . '.jpg');
                 $manager->persist($photo);
                 $path = $path == 'cover' ? $path : (int) $path;
                 $this->addReference('photo-' .(int) $id_project . '-' . $path, $photo);

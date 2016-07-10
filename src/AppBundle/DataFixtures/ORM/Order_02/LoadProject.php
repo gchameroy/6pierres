@@ -32,7 +32,7 @@ class LoadProject extends AbstractFixture implements OrderedFixtureInterface, Co
 				->setName('Projet N° ' . $i)
 				->setCompletedAt(new \DateTime())
 				->setOrder(10 - $i)
-				->setPhoto($this->getReference('photo-' . $i . '-cover'));
+				->setCover($this->getReference('photo-' . $i . '-cover'));
 			$manager->persist($project);
 			$this->addReference('project-' . $i, $project);
 		}

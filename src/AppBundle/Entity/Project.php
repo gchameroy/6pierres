@@ -50,15 +50,15 @@ class Project
     private $addedAt;
     
     /**
-     * @ORM\OneToMany(targetEntity="Item", mappedBy="project", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="project", cascade={"persist"})
      */
-    private $items;
+    private $photos;
     
     /**
     * @ORM\OneToOne(targetEntity="Photo", cascade={"persist"})
     * @ORM\JoinColumn(nullable=true)
     */
-    private $photo;
+    private $cover;
 
 
     /**
@@ -171,7 +171,7 @@ class Project
      */
     public function __construct()
     {
-        $this->items = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -199,60 +199,60 @@ class Project
     }
 
     /**
-     * Add item
-     *
-     * @param \AppBundle\Entity\Item $item
-     *
-     * @return Project
-     */
-    public function addItem(Item $item)
-    {
-        $this->items[] = $item;
-
-        return $this;
-    }
-
-    /**
-     * Remove item
-     *
-     * @param \AppBundle\Entity\Item $item
-     */
-    public function removeItem(Item $item)
-    {
-        $this->items->removeElement($item);
-    }
-
-    /**
-     * Get items
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-    /**
-     * Set photo
+     * Add photo
      *
      * @param \AppBundle\Entity\Photo $photo
      *
      * @return Project
      */
-    public function setPhoto(Photo $photo = null)
+    public function addPhoto(Photo $photo)
     {
-        $this->photo = $photo;
+        $this->photos[] = $photo;
 
         return $this;
     }
 
     /**
-     * Get photo
+     * Remove photo
+     *
+     * @param \AppBundle\Entity\Photo $photo
+     */
+    public function removePhoto(Photo $photo)
+    {
+        $this->photos->removeElement($photo);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
+
+    /**
+     * Set cover
+     *
+     * @param \AppBundle\Entity\Photo $cover
+     *
+     * @return Project
+     */
+    public function setCover(Photo $cover = null)
+    {
+        $this->cover = $cover;
+
+        return $this;
+    }
+
+    /**
+     * Get cover
      *
      * @return \AppBundle\Entity\Photo
      */
-    public function getPhoto()
+    public function getCover()
     {
-        return $this->photo;
+        return $this->cover;
     }
 }

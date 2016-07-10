@@ -7,3 +7,8 @@ twig:
         web_city: '%web_city%'
         web_phone: '%web_phone%'
         web_email: '%web_email%'
+
+        photos_directory: '%photos_directory%'
+        web_photos_directory: '%web_photos_directory%'
+        cover_directory: '%cover_directory%'
+        web_cover_directory: '%web_cover_directory%'
