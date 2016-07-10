@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadItem extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class UpdatePhoto extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -43,12 +43,10 @@ class LoadItem extends AbstractFixture implements OrderedFixtureInterface, Conta
         foreach($projects As $id_project => $photos){
             foreach($photos As $path){
                 $path = $path == 'cover' ? $path : (int) $path;
-                $item = $this->container->get('app.item.factory')->create()
-                    ->setPhoto($this->getReference('photo-' . $id_project . '-' . $path))
+                $photo = $this->getReference('photo-' . $id_project . '-' . $path)
                     ->setProject($this->getReference('project-' . $id_project));
-                $manager->persist($item);
+                $manager->persist($photo);
                 $manager->flush();
-                $this->addReference('item-' . $i, $item);
                 $i++;
             }
         }

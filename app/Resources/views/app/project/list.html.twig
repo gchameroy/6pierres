@@ -40,8 +40,8 @@
 									<li name="project_view" id="{{ project.id }}" data-id_project="{{ project.id }}">
 										<div class="row">
 											<div class="col-lg-1 text-center">
-                                                {% if project.photo %}
-                                                    <img class="img-responsive" src="{{ asset(project.photo.webPath) }}" />
+                                                {% if project.cover %}
+                                                    <img class="img-responsive" src="{{ asset(web_cover_directory ~ '/' ~ project.cover.file) }}" />
                                                 {% endif %}
 											</div>
 											<div class="col-lg-6">
@@ -49,12 +49,7 @@
                                                 <br><small>Réalisé le {{ project.completedAt|date("d/m/Y") }}</small>
 											</div>
 											<div class="col-lg-2 text-center">
-												{% if project.items %}
-                                                    {{ project.items|length }}
-                                                {% else %}
-                                                    0
-                                                {% endif %}
-                                                photos
+                                                {{ project.photos|length }} photos
 											</div>
 											<div class="col-lg-3 text-right">
                                                 <a class="btn btn-info btn-xs">

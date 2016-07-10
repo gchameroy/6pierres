@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Photo
@@ -22,16 +23,26 @@ class Photo
     private $id;
 
     /**
+	 * @var string
+	 *
+     * @ORM\Column(name="file", type="string", length=255, unique=true)
+     *
+     * @Assert\NotBlank(message="Types de fichiers autorisés: .jpg .png")
+     * @Assert\File(mimeTypes={ "image/jpg", "image/jpeg", "image/png" })
+     */
+    private $file;
+	
+	/**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
-    private $path;
+    private $name;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="size", type="bigint")
+     * @ORM\Column(name="size", type="bigint", nullable=true)
      */
     private $size;
     
@@ -41,6 +52,12 @@ class Photo
      * @ORM\Column(name="added_at", type="datetime")
      */
     private $addedAt;
+	
+	/**
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="photos", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $project;
 
 
     /**
@@ -54,27 +71,27 @@ class Photo
     }
 
     /**
-     * Set path
+     * Set file
      *
-     * @param string $path
+     * @param string $file
      *
      * @return Photo
      */
-    public function setPath($path)
+    public function setFile($file)
     {
-        $this->path = $path;
+        $this->file = $file;
 
         return $this;
     }
 
     /**
-     * Get path
+     * Get file
      *
      * @return string
      */
-    public function getPath()
+    public function getFile()
     {
-        return $this->path;
+        return $this->file;
     }
 
     /**
@@ -101,9 +118,9 @@ class Photo
         return $this->size;
     }
     
-    public function getWebPath()
+    public function getWebFile()
     {
-        return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
+        return null === $this->file ? null : $this->getUploadDir().'/'.$this->file;
     }
 
     private function getUploadRootDir()
@@ -138,5 +155,53 @@ class Photo
     public function getAddedAt()
     {
         return $this->addedAt;
+    }
+
+    /**
+     * Set project
+     *
+     * @param \AppBundle\Entity\Project $project
+     *
+     * @return Photo
+     */
+    public function setProject(Project $project = null)
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * Get project
+     *
+     * @return \AppBundle\Entity\Project
+     */
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Photo
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

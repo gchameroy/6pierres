@@ -1,5 +1,5 @@
 <div class="animated fadeInRight">
-	<div class="ibox">
+	<div class="ibox" data-id_project="{{ project.id }}">
 		<div class="ibox-title">
 			<h5>{{ project.name }}</h5>
 			<div class="ibox-tools">
@@ -10,15 +10,15 @@
             <p>
                 <strong>Photo de couverture</strong>
             </p>
-            {% if project.photo %}
+            {% if project.cover %}
                 <ul class="sortable-list agile-list">
                     <li name="project_view" id="{{ project.id }}" data-id_project="{{ project.id }}">
                         <div class="row">
                             <div class="col-lg-4 text-left">
-                                <img class="img-responsive" src="{{ asset(project.photo.webPath) }}" />
+                                <img class="img-responsive" src="{{ asset(web_cover_directory ~ '/' ~ project.cover.file) }}" />
                             </div>
                             <div class="col-lg-5 text-center">
-                                Ajouté le {{ project.photo.addedAt|date('d/m/Y') }}
+                                Ajouté le {{ project.cover.addedAt|date('d/m/Y') }}
                             </div>
                             <div class="col-lg-3 text-right">
                                 <div class="btn-group">
@@ -33,20 +33,20 @@
                 </ul>
             {% else %}
                 <p>
-                    <a class="btn btn-primary btn-sm action_project_add">Ajouter</a>
+                    <a class="btn btn-primary btn-sm action_project_cover_add">Ajouter</a>
                 </p>
             {% endif %}
             </p>
             <p><strong>Photos</strong></p>
             <ul class="sortable-list agile-list ui-sortable" name="photos">
-                {% for item in project.items %}
+                {% for photo in project.photos %}
                     <li name="project_view" id="{{ project.id }}" data-id_project="{{ project.id }}">
                         <div class="row">
                             <div class="col-lg-4 text-left">
-                                <img class="img-responsive" src="{{ asset(item.photo.webPath) }}" />
+                                <img class="img-responsive" src="{{ asset(web_photos_directory ~ '/' ~ photo.file) }}" />
                             </div>
                             <div class="col-lg-5 text-center">
-                                Ajouté le {{ item.photo.addedAt|date('d/m/Y') }}
+                                Ajouté le {{ photo.addedAt|date('d/m/Y') }}
                             </div>
                             <div class="col-lg-3 text-right">
                                 <a class="btn btn-danger btn-xs">
@@ -59,7 +59,7 @@
                 {% endfor %}
             </ul>
             <p>
-                <a class="btn btn-primary btn-sm action_project_add">Ajouter une photo</a>
+                <a class="btn btn-primary btn-sm action_project_photo_add">Ajouter des photos</a>
             </p>
 		</div>
 	</div>
@@ -89,5 +89,13 @@
                 });*/
             }
         }).disableSelection();
+        
+        $('.action_project_photo_add').click(function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            $.get('{{ path('app_project_photo_modal_add', { id: project.id }) }}').done(function(response){
+                $(response).modal();
+            });
+        });
     });
 </script>

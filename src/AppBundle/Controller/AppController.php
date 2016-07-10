@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 use AppBundle\Form\Type\ProjectInsertType;
+use AppBundle\Form\Type\PhotoInsertType;
 
 class AppController extends Controller
 {
@@ -97,6 +98,40 @@ class AppController extends Controller
 			->findOneById($id);
 
 		return $this->render('app/project/ajax/view.html.twig', array(
+			'project' => $project
+		));
+    }
+    
+    /**
+     * @Route("/management/projects/{id}/photo/modal/add", name="app_project_photo_modal_add")
+     */
+    public function projectPhotoModalAddAction($id, Request $request)
+    {
+		$project = $this->getDoctrine()->getManager()
+			->getRepository('AppBundle:Project')
+			->findOneById($id);
+			
+		$photo = $this->get('app.photo.factory')->create();
+
+		$form = $this->createForm(PhotoInsertType::class, $photo);
+        $form->handleRequest($request);
+		
+		if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+			
+			$file = $photo->getFile();
+			$fileName = $this->get('app.photo_uploader')->upload($file);
+            $photo->setFile($fileName);
+			$photo->setProject($project);
+			
+			$em->persist($photo);
+			$em->flush();
+			dump('testy');
+            return $this->redirect($this->generateUrl('app_project_list'));
+        }
+		dump('Yoloo');
+		return $this->render('app/project/modal/add_photo.html.twig', array(
+			'form' => $form->createView(),
 			'project' => $project
 		));
     }

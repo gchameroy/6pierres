@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
-class ProjectInsertType extends AbstractType
+class PhotoInsertType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -23,6 +23,6 @@ class ProjectInsertType extends AbstractType
 
     public function getParent()
     {
-        return ProjectType::class;
+        return PhotoType::class;
     }
 }
