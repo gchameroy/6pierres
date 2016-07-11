@@ -120,16 +120,16 @@ class AppController extends Controller
             $em = $this->getDoctrine()->getManager();
 			
 			$file = $photo->getFile();
-			$fileName = $this->get('app.photo_uploader')->upload($file);
-            $photo->setFile($fileName);
+			$response = $this->get('app.photo_uploader')->uploadFile($file, 'photo');
+
+            $photo->setFile($response->fileName);
+            $photo->setThumb($response->thumbName);
 			$photo->setProject($project);
 			
 			$em->persist($photo);
 			$em->flush();
-			dump('testy');
             return $this->redirect($this->generateUrl('app_project_list'));
         }
-		dump('Yoloo');
 		return $this->render('app/project/modal/add_photo.html.twig', array(
 			'form' => $form->createView(),
 			'project' => $project

@@ -27,28 +27,28 @@ class UpdatePhoto extends AbstractFixture implements OrderedFixtureInterface, Co
 
     public function load(ObjectManager $manager)
     {
-        $projects = array(
-            1 => array(1, 2),
-            2 => array(1, 2),
-            3 => array(1, 2, 3),
-            4 => array(1, 2, 3, 4),
-            5 => array(1, 2),
-            6 => array(1, 2, 3, 4, 5),
-            7 => array(1, 2, 3, 4, 5),
-            8 => array(1, 2, 3),
-            9 => array(1)
-        );
-        
-        $i = 1;
-        foreach($projects As $id_project => $photos){
-            foreach($photos As $path){
-                $path = $path == 'cover' ? $path : (int) $path;
-                $photo = $this->getReference('photo-' . $id_project . '-' . $path)
-                    ->setProject($this->getReference('project-' . $id_project));
-                $manager->persist($photo);
-                $manager->flush();
-                $i++;
-            }
-        }
+//        $projects = array(
+//            1 => array(1, 2),
+//            2 => array(1, 2),
+//            3 => array(1, 2, 3),
+//            4 => array(1, 2, 3, 4),
+//            5 => array(1, 2),
+//            6 => array(1, 2, 3, 4, 5),
+//            7 => array(1, 2, 3, 4, 5),
+//            8 => array(1, 2, 3),
+//            9 => array(1)
+//        );
+//        
+//        $i = 1;
+//        foreach($projects As $id_project => $photos){
+//            foreach($photos As $path){
+//                $path = $path == 'cover' ? $path : (int) $path;
+//                $photo = $this->getReference('photo-' . $id_project . '-' . $path)
+//                    ->setProject($this->getReference('project-' . $id_project));
+//                $manager->persist($photo);
+//                $manager->flush();
+//                $i++;
+//            }
+//        }
     }
 }

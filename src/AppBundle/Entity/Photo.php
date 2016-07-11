@@ -33,6 +33,13 @@ class Photo
     private $file;
 	
 	/**
+	 * @var string
+	 *
+     * @ORM\Column(name="thumb", type="string", length=255, unique=true)
+     */
+    private $thumb;
+	
+	/**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
@@ -117,21 +124,6 @@ class Photo
     {
         return $this->size;
     }
-    
-    public function getWebFile()
-    {
-        return null === $this->file ? null : $this->getUploadDir().'/'.$this->file;
-    }
-
-    private function getUploadRootDir()
-    {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
-    }
-
-    private function getUploadDir()
-    {
-        return 'uploads';
-    }
 
     /**
      * Set addedAt
@@ -203,5 +195,29 @@ class Photo
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set thumb
+     *
+     * @param string $thumb
+     *
+     * @return Photo
+     */
+    public function setThumb($thumb)
+    {
+        $this->thumb = $thumb;
+
+        return $this;
+    }
+
+    /**
+     * Get thumb
+     *
+     * @return string
+     */
+    public function getThumb()
+    {
+        return $this->thumb;
     }
 }
