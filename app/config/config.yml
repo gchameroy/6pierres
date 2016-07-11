@@ -12,6 +12,8 @@ parameters:
     web_photos_directory: 'uploads/photos'
     cover_directory: '%kernel.root_dir%/../web/uploads/cover'
     web_cover_directory: 'uploads/cover'
+    thumbs_directory: '%kernel.root_dir%/../web/uploads/thumbs'
+    web_thumbs_directory: 'uploads/thumbs'
 
 framework:
     #esi:             ~

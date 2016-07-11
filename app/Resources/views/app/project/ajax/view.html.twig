@@ -43,7 +43,7 @@
                     <li name="project_view" id="{{ project.id }}" data-id_project="{{ project.id }}">
                         <div class="row">
                             <div class="col-lg-4 text-left">
-                                <img class="img-responsive" src="{{ asset(web_photos_directory ~ '/' ~ photo.file) }}" />
+                                <img class="img-responsive" src="{{ asset(web_thumbs_directory ~ '/' ~ photo.thumb) }}" />
                             </div>
                             <div class="col-lg-5 text-center">
                                 Ajouté le {{ photo.addedAt|date('d/m/Y') }}
