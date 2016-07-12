@@ -93,12 +93,20 @@ class AppController extends Controller
     public function projectViewAction(Request $request)
     {
 		$id = $request->request->get('id');
-		$project = $this->getDoctrine()->getManager()
+		$em = $this->getDoctrine()->getManager();
+		$project = $em
 			->getRepository('AppBundle:Project')
 			->findOneById($id);
 
+		$photos = $em
+			->getRepository('AppBundle:Photo')
+			->findBy(
+				array('project' => $project),
+				array('orderId' => 'ASC')
+			);
 		return $this->render('app/project/ajax/view.html.twig', array(
-			'project' => $project
+			'project' => $project,
+			'photos' => $photos
 		));
     }
     
@@ -119,15 +127,18 @@ class AppController extends Controller
 		if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 			
-			$files = $em->getRepository('AppBundle:Photo')
-				->findOneByProject($project);
+			$photos = $em->getRepository('AppBundle:Photo')
+				->findAll(array(
+					'project' => $project
+				));
 			
 			$file = $photo->getFile();
 			$response = $this->get('app.photo_uploader')->uploadFile($file);
 
-            $photo->setFile($response->fileName);
-            $photo->setThumb($response->thumbName);
-			$photo->setProject($project);
+            $photo->setFile($response->fileName)
+				->setThumb($response->thumbName)
+				->setOrder(count($photos) + 1)
+				->setProject($project);
 
 			$em->persist($photo);
 			$em->flush();
@@ -137,5 +148,28 @@ class AppController extends Controller
 			'form' => $form->createView(),
 			'project' => $project
 		));
+    }
+	
+	//app_project_photo_ajax_order
+	/**
+     * @Route("/management/projects/view/ajax/orderPhoto", name="app_project_view_ajax_orderPhoto")
+     */
+    public function projectViewAjaxOrderPhotoAction(Request $request)
+    {
+		$photos = json_decode($request->request->get('photos'));
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('AppBundle:Photo');
+		foreach($photos As $order => $id){
+			$photo = $repository->findOneById($id);
+			$photo->setOrder($order + 1);
+			$em->persist($photo);
+		}
+		$em->flush();
+
+		$response = new JsonResponse();
+		$response->setData(array(
+			'valid' => true
+		));
+		return $response;
     }
 }

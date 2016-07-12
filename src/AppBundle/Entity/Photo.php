@@ -52,6 +52,13 @@ class Photo
      * @ORM\Column(name="size", type="bigint", nullable=true)
      */
     private $size;
+	
+	/**
+     * @var int
+     *
+     * @ORM\Column(name="order_id", type="integer")
+     */
+    private $orderId;
     
     /**
      * @var \DateTime
@@ -219,5 +226,53 @@ class Photo
     public function getThumb()
     {
         return $this->thumb;
+    }
+
+    /**
+     * Set orderId
+     *
+     * @param integer $orderId
+     *
+     * @return Photo
+     */
+    public function setOrderId($orderId)
+    {
+        $this->orderId = $orderId;
+
+        return $this;
+    }
+
+    /**
+     * Get orderId
+     *
+     * @return integer
+     */
+    public function getOrderId()
+    {
+        return $this->orderId;
+    }
+	
+	/**
+     * Set orderId
+     *
+     * @param integer $orderId
+     *
+     * @return Project
+     */
+    public function setOrder($orderId)
+    {
+        $this->orderId = $orderId;
+
+        return $this;
+    }
+
+    /**
+     * Get orderId
+     *
+     * @return int
+     */
+    public function getOrder()
+    {
+        return $this->orderId;
     }
 }
