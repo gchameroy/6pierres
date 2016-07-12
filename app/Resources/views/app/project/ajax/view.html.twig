@@ -3,64 +3,34 @@
 		<div class="ibox-title">
 			<h5>{{ project.name }}</h5>
 			<div class="ibox-tools">
-				<small>Réalisé le {{ project.completedAt|date('d/m/Y') }}</small>
+				<a class="btn btn-primary btn-sm action_project_photo_add">Ajouter une photo</a>
 			</div>
 		</div>
 		<div class="ibox-content">
-            <p>
-                <strong>Photo de couverture</strong>
-            </p>
-            {% if project.cover %}
-                <ul class="sortable-list agile-list">
-                    <li name="project_view" id="{{ project.id }}" data-id_project="{{ project.id }}">
-                        <div class="row">
-                            <div class="col-lg-4 text-left">
-                                <img class="img-responsive" src="{{ asset(web_cover_directory ~ '/' ~ project.cover.file) }}" />
-                            </div>
-                            <div class="col-lg-5 text-center">
-                                Ajouté le {{ project.cover.addedAt|date('d/m/Y') }}
-                            </div>
-                            <div class="col-lg-3 text-right">
-                                <div class="btn-group">
-                                    <a class="btn btn-info btn-xs">
-                                        <i class="fa fa-delete"></i>
-                                        Modifier
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            {% else %}
-                <p>
-                    <a class="btn btn-primary btn-sm action_project_cover_add">Ajouter</a>
-                </p>
-            {% endif %}
-            </p>
-            <p><strong>Photos</strong></p>
-            <ul class="sortable-list agile-list ui-sortable" name="photos">
-                {% for photo in project.photos %}
-                    <li name="project_view" id="{{ project.id }}" data-id_project="{{ project.id }}">
-                        <div class="row">
-                            <div class="col-lg-4 text-left">
-                                <img class="img-responsive" src="{{ asset(web_thumbs_directory ~ '/' ~ photo.thumb) }}" />
-                            </div>
-                            <div class="col-lg-5 text-center">
-                                Ajouté le {{ photo.addedAt|date('d/m/Y') }}
-                            </div>
-                            <div class="col-lg-3 text-right">
-                                <a class="btn btn-danger btn-xs">
-                                    <i class="fa fa-delete"></i>
-                                    Supprimer
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-            <p>
-                <a class="btn btn-primary btn-sm action_project_photo_add">Ajouter des photos</a>
-            </p>
+			{% if project.photos %}
+				<ul class="sortable-list agile-list ui-sortable" name="photos">
+					{% for photo in project.photos %}
+						<li name="project_view" id="{{ project.id }}" data-id_project="{{ project.id }}">
+							<div class="row">
+								<div class="col-lg-4 text-left">
+									<img class="img-responsive" src="{{ asset(web_thumbs_directory ~ '/' ~ photo.thumb) }}" />
+								</div>
+								<div class="col-lg-5 text-center">
+									Ajouté le {{ photo.addedAt|date('d/m/Y') }}
+								</div>
+								<div class="col-lg-3 text-right">
+									<a class="btn btn-danger btn-xs">
+										<i class="fa fa-delete"></i>
+										Supprimer
+									</a>
+								</div>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<a class="btn btn-primary btn-sm action_project_photo_add">Ajouter une photo</a>
+			{% endif %}
 		</div>
 	</div>
 </div>

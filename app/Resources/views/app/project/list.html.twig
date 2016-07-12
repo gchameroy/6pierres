@@ -35,34 +35,38 @@
 					</div>
                     <div class="ibox-content">
 						<div class="project-list">
-							<ul class="sortable-list connectList agile-list ui-sortable" name="projects">
-								{% for project in projects %}
-									<li name="project_view" id="{{ project.id }}" data-id_project="{{ project.id }}">
-										<div class="row">
-											<div class="col-lg-1 text-center">
-                                                {% if project.cover %}
-                                                    <img class="img-responsive" src="{{ asset(web_cover_directory ~ '/' ~ project.cover.file) }}" />
-                                                {% endif %}
+							{% if projects %}
+								<ul class="sortable-list connectList agile-list ui-sortable" name="projects">
+									{% for project in projects %}
+										<li name="project_view" id="{{ project.id }}" data-id_project="{{ project.id }}">
+											<div class="row">
+												<div class="col-lg-1 text-center">
+													{% if project.photos %}
+														<img class="img-responsive" src="{{ asset(web_thumbs_directory ~ '/' ~ project.photos[0].thumb) }}" />
+													{% endif %}
+												</div>
+												<div class="col-lg-6">
+													<a>{{ project.name }}</a>
+													<br><small>Réalisé le {{ project.completedAt|date("d/m/Y") }}</small>
+												</div>
+												<div class="col-lg-2 text-center">
+													{{ project.photos|length }} photos
+												</div>
+												<div class="col-lg-3 text-right">
+													<a class="btn btn-info btn-xs">
+														Modifier
+													</a>
+													<a class="btn btn-danger btn-xs">
+														Supprimer
+													</a>
+												</div>
 											</div>
-											<div class="col-lg-6">
-												<a>{{ project.name }}</a>
-                                                <br><small>Réalisé le {{ project.completedAt|date("d/m/Y") }}</small>
-											</div>
-											<div class="col-lg-2 text-center">
-                                                {{ project.photos|length }} photos
-											</div>
-											<div class="col-lg-3 text-right">
-                                                <a class="btn btn-info btn-xs">
-                                                    Modifier
-                                                </a>
-                                                <a class="btn btn-danger btn-xs">
-                                                    Supprimer
-                                                </a>
-											</div>
-										</div>
-									</li>
-								{% endfor %}
-							</ul>
+										</li>
+									{% endfor %}
+								</ul>
+							{% else %}
+								<a class="btn btn-primary btn-sm action_project_add">Ajouter un projet</a>
+							{% endif %}
 						</div>
                     </div>
                 </div>
