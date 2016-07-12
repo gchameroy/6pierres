@@ -7,10 +7,10 @@
 			</div>
 		</div>
 		<div class="ibox-content">
-			{% if project.photos %}
+			{% if photos %}
 				<ul class="sortable-list agile-list ui-sortable" name="photos">
-					{% for photo in project.photos %}
-						<li name="project_view" id="{{ project.id }}" data-id_project="{{ project.id }}">
+					{% for photo in photos %}
+						<li name="project_view" id="{{ photo.id }}" data-id_project="{{ photo.id }}">
 							<div class="row">
 								<div class="col-lg-4 text-left">
 									<img class="img-responsive" src="{{ asset(web_thumbs_directory ~ '/' ~ photo.thumb) }}" />
@@ -39,13 +39,13 @@
         $('[name="photos"]').sortable({
             connectWith: '[name="photos"]',
             update: function( event, ui ) {
-                var projects = window.JSON.stringify($('[name="projects"]').sortable('toArray'));
-                /*$.ajax({
+                var photos = window.JSON.stringify($('[name="photos"]').sortable('toArray'));
+                $.ajax({
                     type: 'post',
                     dataType: 'json',
-                    url: '{{ path('app_project_ajax_order') }}',
+                    url: '{{ path('app_project_view_ajax_orderPhoto') }}',
                     data:{
-                        projects: projects
+                        photos: photos
                     },
                     success: function(response){
                         if(!response.valid){
@@ -54,9 +54,9 @@
                         }
                     },
                     error: function(){
-                        swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: VPL01', 'error');
+                        swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: VPV01', 'error');
                     }
-                });*/
+                });
             }
         }).disableSelection();
         

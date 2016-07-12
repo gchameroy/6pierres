@@ -42,7 +42,7 @@
 											<div class="row">
 												<div class="col-lg-1 text-center">
 													{% if project.photos %}
-														<img class="img-responsive" src="{{ asset(web_thumbs_directory ~ '/' ~ project.photos[0].thumb) }}" />
+														<img class="img-responsive" src="{{ asset(web_thumbs_directory ~ '/' ~ project.cover.thumb) }}" />
 													{% endif %}
 												</div>
 												<div class="col-lg-6">

@@ -225,4 +225,19 @@ class Project
     {
         return $this->photos;
     }
+	
+	/**
+     * Get cover
+     *
+     * @return \AppBundle\Entity\Photo $photo
+     */
+	public function getCover()
+	{
+		if(!$this->photos){ return null; }
+		foreach($this->photos As $photo){
+			if($photo->getOrder() == 1){
+				return $photo;
+			}
+		}
+	}
 }
