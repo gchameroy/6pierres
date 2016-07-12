@@ -107,10 +107,10 @@ class AppController extends Controller
      */
     public function projectPhotoModalAddAction($id, Request $request)
     {
-		$project = $this->getDoctrine()->getManager()
-			->getRepository('AppBundle:Project')
+		$em = $this->getDoctrine()->getManager();
+		$project = $em->getRepository('AppBundle:Project')
 			->findOneById($id);
-			
+		
 		$photo = $this->get('app.photo.factory')->create();
 
 		$form = $this->createForm(PhotoInsertType::class, $photo);
@@ -119,13 +119,16 @@ class AppController extends Controller
 		if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 			
+			$files = $em->getRepository('AppBundle:Photo')
+				->findOneByProject($project);
+			
 			$file = $photo->getFile();
-			$response = $this->get('app.photo_uploader')->uploadFile($file, 'photo');
+			$response = $this->get('app.photo_uploader')->uploadFile($file);
 
             $photo->setFile($response->fileName);
             $photo->setThumb($response->thumbName);
 			$photo->setProject($project);
-			
+
 			$em->persist($photo);
 			$em->flush();
             return $this->redirect($this->generateUrl('app_project_list'));

@@ -10,7 +10,5 @@ twig:
 
         photos_directory: '%photos_directory%'
         web_photos_directory: '%web_photos_directory%'
-        cover_directory: '%cover_directory%'
-        web_cover_directory: '%web_cover_directory%'
         thumbs_directory: '%thumbs_directory%'
         web_thumbs_directory: '%web_thumbs_directory%'

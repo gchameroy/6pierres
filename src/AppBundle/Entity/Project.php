@@ -54,12 +54,6 @@ class Project
      */
     private $photos;
     
-    /**
-    * @ORM\OneToOne(targetEntity="Photo", cascade={"persist"})
-    * @ORM\JoinColumn(nullable=true)
-    */
-    private $cover;
-
 
     /**
      * Get id
@@ -230,29 +224,5 @@ class Project
     public function getPhotos()
     {
         return $this->photos;
-    }
-
-    /**
-     * Set cover
-     *
-     * @param \AppBundle\Entity\Photo $cover
-     *
-     * @return Project
-     */
-    public function setCover(Photo $cover = null)
-    {
-        $this->cover = $cover;
-
-        return $this;
-    }
-
-    /**
-     * Get cover
-     *
-     * @return \AppBundle\Entity\Photo
-     */
-    public function getCover()
-    {
-        return $this->cover;
     }
 }
