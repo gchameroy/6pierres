@@ -149,8 +149,7 @@ class AppController extends Controller
 			'project' => $project
 		));
     }
-	
-	//app_project_photo_ajax_order
+
 	/**
      * @Route("/management/projects/view/ajax/orderPhoto", name="app_project_view_ajax_orderPhoto")
      */
@@ -163,6 +162,39 @@ class AppController extends Controller
 			$photo = $repository->findOneById($id);
 			$photo->setOrder($order + 1);
 			$em->persist($photo);
+		}
+		$em->flush();
+
+		$response = new JsonResponse();
+		$response->setData(array(
+			'valid' => true
+		));
+		return $response;
+    }
+
+	/**
+     * @Route("/management/projects/photo/ajax/delete", name="app_project_photo_ajax_delete")
+     */
+    public function projectPhotoAjaxDeleteAction(Request $request)
+    {
+		$id = $request->request->get('id');
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('AppBundle:Photo');
+		$photo = $repository->findOneById($id);
+		$project = $photo->getProject();
+		$em->remove($photo);
+		$em->flush();
+		
+		$photos = $repository->findBy(
+			array('project' => $project),
+			array('orderId' => 'ASC')
+		);
+		
+		$i = 1;
+		foreach($photos As $photo){
+			$photo->setOrder($i);
+			$em->persist($photo);
+			$i++;
 		}
 		$em->flush();
 
