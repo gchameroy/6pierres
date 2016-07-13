@@ -19,7 +19,7 @@
 									Ajouté le {{ photo.addedAt|date('d/m/Y') }}
 								</div>
 								<div class="col-lg-3 text-right">
-									<a class="btn btn-danger btn-xs">
+									<a class="btn btn-danger btn-xs action_project_photo_delete">
 										<i class="fa fa-delete"></i>
 										Supprimer
 									</a>
@@ -66,6 +66,42 @@
             $.get('{{ path('app_project_photo_modal_add', { id: project.id }) }}').done(function(response){
                 $(response).modal();
             });
+        });
+		
+		$('.action_project_photo_delete').click(function(e){
+            e.preventDefault();
+            e.stopPropagation();
+			var $object = $(this);
+			var id_photo = $object.closest('[data-id_project]').attr('data-id_project');
+            swal({
+				title: "Attention !",
+				text: "Vous êtes sur le point de supprimer une photo.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#ed5565",
+				confirmButtonText: "Supprimer",
+				cancelButtonText: "Annuler",
+				closeOnConfirm: true
+			}, function(){
+				$.ajax({
+                    type: 'delete',
+                    dataType: 'json',
+                    url: '{{ path('app_project_photo_ajax_delete') }}',
+                    data:{
+                        id: id_photo
+                    },
+                    success: function(response){
+                        if(!response.valid){
+                            swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: ' + response.code, 'error');
+                            return;
+                        }
+						$object.closest('[data-id_project]').remove();
+                    },
+                    error: function(){
+                        swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: VPV02', 'error');
+                    }
+                });
+			});
         });
     });
 </script>
