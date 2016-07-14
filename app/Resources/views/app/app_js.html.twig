@@ -1,0 +1,18 @@
+<script>
+    $('.action_project_add').click(function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        $.get('{{ path('app_project_modal_add')}}').done(function(response){
+			$(response).modal();
+		});
+    });
+	
+	$('.action_project_modify').click(function(e){
+		e.preventDefault();
+		e.stopPropagation();
+		var id_project = $(this).closest('[data-id_project]').attr('data-id_project');
+		$.get('{{ path('app_project_modal_modify')}}', { id: id_project }).done(function(response){
+			$(response).modal();
+		});
+	});
+</script>

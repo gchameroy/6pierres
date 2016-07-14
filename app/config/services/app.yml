@@ -1,0 +1,10 @@
+services:
+    app.user.factory:
+      class: AppBundle\Entity\UserFactory
+    app.project.factory:
+      class: AppBundle\Entity\ProjectFactory
+    app.photo.factory:
+      class: AppBundle\Entity\PhotoFactory
+    app.photo_uploader:
+        class: AppBundle\FileUploader
+        arguments: ['%photos_directory%', '%thumbs_directory%']

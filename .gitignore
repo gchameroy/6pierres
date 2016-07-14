@@ -20,3 +20,8 @@
 ## IDE ##
 /.idea
 /nbproject
+
+## Application ##
+/web/uploads/*
+!/web/uploads/.gitkeep
+/web/cache/*

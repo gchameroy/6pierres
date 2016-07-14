@@ -7,7 +7,11 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
+    photos_directory: '%kernel.root_dir%/../web/uploads/photos'
+    web_photos_directory: 'uploads/photos'
+    thumbs_directory: '%kernel.root_dir%/../web/uploads/thumbs'
+    web_thumbs_directory: 'uploads/thumbs'
 
 framework:
     #esi:             ~
