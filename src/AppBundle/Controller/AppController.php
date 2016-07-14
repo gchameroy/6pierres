@@ -204,4 +204,23 @@ class AppController extends Controller
 		));
 		return $response;
     }
+	
+	/**
+     * @Route("/management/projects/ajax/delete", name="app_project_ajax_delete")
+     */
+    public function projectAjaxDeleteAction(Request $request)
+    {
+		$id = $request->request->get('id');
+		$em = $this->getDoctrine()->getManager();
+		$repository = $em->getRepository('AppBundle:Project');
+		$project = $repository->findOneById($id);
+		$em->remove($project);
+		$em->flush();
+
+		$response = new JsonResponse();
+		$response->setData(array(
+			'valid' => true
+		));
+		return $response;
+    }
 }

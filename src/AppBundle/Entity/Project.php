@@ -24,7 +24,7 @@ class Project
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
@@ -50,7 +50,7 @@ class Project
     private $addedAt;
     
     /**
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="project", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="project", cascade={"remove"})
      */
     private $photos;
     

@@ -41,7 +41,7 @@
 										<li name="project_view" id="{{ project.id }}" data-id_project="{{ project.id }}">
 											<div class="row">
 												<div class="col-lg-1 text-center">
-													{% if project.photos %}
+													{% if project.photos|length > 0 %}
 														<img class="img-responsive" src="{{ asset(web_thumbs_directory ~ '/' ~ project.cover.thumb) }}" />
 													{% endif %}
 												</div>
@@ -56,7 +56,7 @@
 													<a class="btn btn-info btn-xs">
 														Modifier
 													</a>
-													<a class="btn btn-danger btn-xs">
+													<a class="btn btn-danger btn-xs action_project_delete">
 														Supprimer
 													</a>
 												</div>
@@ -116,6 +116,43 @@
 					});
                 }
             }).disableSelection();
+			
+			//app_project_ajax_delete
+			$('.action_project_delete').click(function(e){
+            e.preventDefault();
+            e.stopPropagation();
+			var $object = $(this);
+			var id_project = $object.closest('[data-id_project]').attr('data-id_project');
+            swal({
+				title: "Attention !",
+				text: "Supprimer un projet supprime toutes les photos associées.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#ed5565",
+				confirmButtonText: "Supprimer",
+				cancelButtonText: "Annuler",
+				closeOnConfirm: true
+			}, function(){
+				$.ajax({
+                    type: 'delete',
+                    dataType: 'json',
+                    url: '{{ path('app_project_ajax_delete') }}',
+                    data:{
+                        id: id_project
+                    },
+                    success: function(response){
+                        if(!response.valid){
+                            swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: ' + response.code, 'error');
+                            return;
+                        }
+						$object.closest('[data-id_project]').remove();
+                    },
+                    error: function(){
+                        swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: VPL02', 'error');
+                    }
+                });
+			});
+        });
         });
     </script>
 {% endblock %}
