@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 use AppBundle\Form\Type\ProjectInsertType;
+use AppBundle\Form\Type\ProjectUpdateType;
 use AppBundle\Form\Type\PhotoInsertType;
 
 class AppController extends Controller
@@ -63,6 +64,45 @@ class AppController extends Controller
         return $this->render('app/project/modal/add.html.twig', array(
             'form' => $form->createView()
         ));
+    }
+	
+	/**
+     * @Route("/management/projects/modal/modify", name="app_project_modal_modify")
+     */
+    public function projectModalModifyAction(Request $request)
+    {
+		$id = $request->query->get('id');
+		$em = $this->getDoctrine()->getManager();
+		$project = $em
+			->getRepository('AppBundle:Project')
+			->findOneById($id);
+        $form = $this->createForm(ProjectUpdateType::class, $project);
+	        return $this->render('app/project/modal/modify.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+	
+	/**
+     * @Route("/management/projects/modify", name="app_project_modify")
+     */
+    public function projectModifyAction(Request $request)
+    {
+		//Todo
+//		dump($request->query->all());
+//		$project = $this->get('app.project.factory')->create();
+//        $form = $this->createForm(ProjectInsertType::class, $project);
+//
+//        if($form->handleRequest($request)->isValid()){
+//			$project = $form->getData();
+//			$em = $this->getDoctrine()->getManager();
+//            $em->persist($project);
+//            $em->flush();
+//            return $this->redirectToRoute('app_project_list');
+//        }
+//
+//        return $this->render('app/project/modal/modify.html.twig', array(
+//            'form' => $form->createView()
+//        ));
     }
 	
 	/**
