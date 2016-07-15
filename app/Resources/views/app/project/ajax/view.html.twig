@@ -10,7 +10,7 @@
 			{% if project.photos %}
 				<ul class="sortable-list agile-list ui-sortable" name="photos">
 					{% for photo in project.photos %}
-						<li name="project_view" id="{{ photo.id }}" data-id_project="{{ photo.id }}">
+						<li name="project_view" id="{{ photo.id }}" data-id_photo="{{ photo.id }}">
 							<div class="row">
 								<div class="col-lg-4 text-left">
 									<img class="img-responsive" src="{{ asset(web_thumbs_directory ~ '/' ~ photo.thumb) }}" />
@@ -95,7 +95,7 @@
                             swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: ' + response.code, 'error');
                             return;
                         }
-						$object.closest('[data-id_project]').remove();
+						$object.closest('[data-id_photo]').remove();
                     },
                     error: function(){
                         swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: VPV02', 'error');
