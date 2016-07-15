@@ -51,6 +51,7 @@ class Project
     
     /**
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="project", cascade={"remove"})
+	 * @ORM\OrderBy({"orderId" = "ASC"})
      */
     private $photos;
     
@@ -234,10 +235,6 @@ class Project
 	public function getCover()
 	{
 		if(!$this->photos){ return null; }
-		foreach($this->photos As $photo){
-			if($photo->getOrder() == 1){
-				return $photo;
-			}
-		}
+		return $this->photos[0];
 	}
 }

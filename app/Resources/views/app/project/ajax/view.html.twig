@@ -7,9 +7,9 @@
 			</div>
 		</div>
 		<div class="ibox-content">
-			{% if photos %}
+			{% if project.photos %}
 				<ul class="sortable-list agile-list ui-sortable" name="photos">
-					{% for photo in photos %}
+					{% for photo in project.photos %}
 						<li name="project_view" id="{{ photo.id }}" data-id_project="{{ photo.id }}">
 							<div class="row">
 								<div class="col-lg-4 text-left">

@@ -28,10 +28,7 @@ class AppController extends Controller
     {
 		$projects = $this->getDoctrine()->getManager()
 			->getRepository('AppBundle:Project')
-			->findBy(
-				array(),
-				array('orderId' => 'ASC')
-			);
+			->findAll();
 
         return $this->render('app/project/list.html.twig', array(
 			'projects' => $projects
@@ -138,15 +135,8 @@ class AppController extends Controller
 			->getRepository('AppBundle:Project')
 			->findOneById($id);
 
-		$photos = $em
-			->getRepository('AppBundle:Photo')
-			->findBy(
-				array('project' => $project),
-				array('orderId' => 'ASC')
-			);
 		return $this->render('app/project/ajax/view.html.twig', array(
-			'project' => $project,
-			'photos' => $photos
+			'project' => $project
 		));
     }
     
@@ -221,14 +211,13 @@ class AppController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$repository = $em->getRepository('AppBundle:Photo');
 		$photo = $repository->findOneById($id);
+		dump($id);
+		dump($photo);
 		$project = $photo->getProject();
 		$em->remove($photo);
 		$em->flush();
 		
-		$photos = $repository->findBy(
-			array('project' => $project),
-			array('orderId' => 'ASC')
-		);
+		$photos = $project->getPhotos();
 		
 		$i = 1;
 		foreach($photos As $photo){
