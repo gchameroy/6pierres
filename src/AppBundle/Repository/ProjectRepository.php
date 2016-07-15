@@ -10,5 +10,8 @@ namespace AppBundle\Repository;
  */
 class ProjectRepository extends \Doctrine\ORM\EntityRepository
 {
-
+	public function findAll()
+	{
+		return $this->findBy(array(), array('orderId' => 'ASC'));
+	}
 }

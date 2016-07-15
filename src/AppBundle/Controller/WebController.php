@@ -13,8 +13,18 @@ class WebController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('web/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
-        ]);
+		$projects = $this->getDoctrine()->getManager()
+			->getRepository('AppBundle:Project')
+			->findAll();
+		
+		for($i=0; $i<count($projects); $i++){
+			if(count($projects[$i]->getPhotos()) == 0){
+				unset($projects[$i]);
+			}
+		}
+		
+        return $this->render('web/index.html.twig', array(
+			'projects' => $projects
+		));
     }
 }

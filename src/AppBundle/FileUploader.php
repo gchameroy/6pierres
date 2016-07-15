@@ -45,7 +45,7 @@ class FileUploader
 		} while(file_exists($this->thumbsDir . '/' . $thumbName));
 		
 		Image::open($this->targetDir . '/' . $fileName)
-			->zoomCrop(200, 150)
+			->zoomCrop(350, 263)
 			->save($this->thumbsDir . '/' . $thumbName, 'jpg', 100);
 		
 		return $thumbName;
