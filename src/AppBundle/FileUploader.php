@@ -3,7 +3,7 @@
 namespace AppBundle;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Gregwar\Image\Image;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class FileUploader
 {
@@ -17,13 +17,16 @@ class FileUploader
     public function uploadFile(UploadedFile $file)
     {
 		do{
-			$fileName = md5(random_bytes(10)) . '.jpg';
+			$fileName = md5(random_bytes(10)) . '.' . $file->guessExtension();
 		} while(file_exists($this->targetDir . '/' . $fileName));
+		
+		do{
+			$thumbName = md5(random_bytes(10)) . '.' . $file->guessExtension();
+		} while(file_exists($this->thumbsDir . '/' . $thumbName));
 		
 		$file->move($this->targetDir, $fileName);
 		$this->cropFile($fileName);
-		
-		$thumbName = $this->makeThumb($fileName);
+		$this->makeThumb($fileName, $thumbName);
 
 		$response = new \stdClass;
 		$response->fileName = $fileName;
@@ -33,21 +36,20 @@ class FileUploader
 	
 	private function cropFile($fileName)
 	{
-		Image::open($this->targetDir . '/' . $fileName)
-			->cropResize(2000, 2000)
-			->save($this->targetDir . '/' . $fileName, 'jpg', 30);
+		$image = Image::make($this->targetDir . '/' . $fileName)
+			->widen(2000)
+			->heighten(2000);
+		$orientation = $image->exif('Orientation');
+		if($orientation == 6){
+			$image->rotate(-90);
+		}
+		$image->save($this->targetDir . '/' . $fileName);
 	}
 	
-	private function makeThumb($fileName)
+	private function makeThumb($fileName, $thumbName)
 	{
-		do{
-			$thumbName = md5(random_bytes(10)) . '.jpg';
-		} while(file_exists($this->thumbsDir . '/' . $thumbName));
-		
-		Image::open($this->targetDir . '/' . $fileName)
-			->zoomCrop(350, 263)
-			->save($this->thumbsDir . '/' . $thumbName, 'jpg', 100);
-		
-		return $thumbName;
+		Image::make($this->targetDir . '/' . $fileName)
+			->fit(350, 263)
+			->save($this->thumbsDir . '/' . $thumbName, 100);
 	}
 }
