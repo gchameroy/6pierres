@@ -16,6 +16,7 @@
             {% block custom_css %}{% endblock %}
 
             <script src="{{ asset('inspinia/js/jquery-2.1.1.js') }}"></script>
+            <script src="{{ asset('inspinia/js/jquery-ui-1.10.4.min.js') }}"></script>
         {% endblock %}
     </head>
 
@@ -45,7 +46,9 @@
                 {% include 'layout_inspinia/main_js.html.twig' only %}
                 {% if is_granted('ROLE_ADMIN') %}
                     {% include 'office/office_js.html.twig' only %}
-                {% endif %}
+                {% elseif is_granted('ROLE_USER') %}
+					{% include 'app/app_js.html.twig' only %}
+				{% endif %}
             {% endblock %}
         </body>
     {% endblock %}

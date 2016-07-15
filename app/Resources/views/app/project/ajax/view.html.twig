@@ -1,0 +1,107 @@
+<div class="animated fadeInRight">
+	<div class="ibox" data-id_project="{{ project.id }}">
+		<div class="ibox-title">
+			<h5>{{ project.name }}</h5>
+			<div class="ibox-tools">
+				<a class="btn btn-primary btn-sm action_project_photo_add">Ajouter une photo</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+			{% if project.photos %}
+				<ul class="sortable-list agile-list ui-sortable" name="photos">
+					{% for photo in project.photos %}
+						<li name="project_view" id="{{ photo.id }}" data-id_photo="{{ photo.id }}">
+							<div class="row">
+								<div class="col-lg-4 text-left">
+									<img class="img-responsive" src="{{ asset(web_thumbs_directory ~ '/' ~ photo.thumb) }}" />
+								</div>
+								<div class="col-lg-5 text-center">
+									Ajouté le {{ photo.addedAt|date('d/m/Y') }}
+								</div>
+								<div class="col-lg-3 text-right">
+									<a class="btn btn-danger btn-xs action_project_photo_delete">
+										<i class="fa fa-delete"></i>
+										Supprimer
+									</a>
+								</div>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<a class="btn btn-primary btn-sm action_project_photo_add">Ajouter une photo</a>
+			{% endif %}
+		</div>
+	</div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('[name="photos"]').sortable({
+            connectWith: '[name="photos"]',
+            update: function( event, ui ) {
+                var photos = window.JSON.stringify($('[name="photos"]').sortable('toArray'));
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    url: '{{ path('app_project_view_ajax_orderPhoto') }}',
+                    data:{
+                        photos: photos
+                    },
+                    success: function(response){
+                        if(!response.valid){
+                            swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: ' + response.code, 'error');
+                            return;
+                        }
+                    },
+                    error: function(){
+                        swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: VPV01', 'error');
+                    }
+                });
+            }
+        }).disableSelection();
+        
+        $('.action_project_photo_add').click(function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            $.get('{{ path('app_project_photo_modal_add', { id: project.id }) }}').done(function(response){
+                $(response).modal();
+            });
+        });
+		
+		$('.action_project_photo_delete').click(function(e){
+            e.preventDefault();
+            e.stopPropagation();
+			var $object = $(this);
+			var id_photo = $object.closest('[data-id_photo]').attr('data-id_photo');
+            swal({
+				title: "Attention !",
+				text: "Vous êtes sur le point de supprimer une photo.",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#ed5565",
+				confirmButtonText: "Supprimer",
+				cancelButtonText: "Annuler",
+				closeOnConfirm: true
+			}, function(){
+				$.ajax({
+                    type: 'delete',
+                    dataType: 'json',
+                    url: '{{ path('app_project_photo_ajax_delete') }}',
+                    data:{
+                        id: id_photo
+                    },
+                    success: function(response){
+                        if(!response.valid){
+                            swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: ' + response.code, 'error');
+                            return;
+                        }
+						$object.closest('[data-id_photo]').remove();
+                    },
+                    error: function(){
+                        swal('Oups !', 'Une erreur est survenue.' + "\n" + 'Code Erreur: VPV02', 'error');
+                    }
+                });
+			});
+        });
+    });
+</script>
