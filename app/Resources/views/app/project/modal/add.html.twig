@@ -3,25 +3,25 @@
         <div class="modal-content">
             {{ form_start(form, {'action': path('app_project_modal_add')}) }}
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ 'modal.action.close.label'|trans }}</span></button>
-                    <h4 class="modal-title">{{ 'project.action.add.label'|trans }}</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fermer</span></button>
+                    <h4 class="modal-title">Ajouter un projet</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
 						<div class="form-group">
-							{{ form_label(form.name, "project.name.label", {'label_attr': {'class': 'control-label'}}) }}
+							{{ form_label(form.name, "Nom (facultatif)", {'label_attr': {'class': 'control-label'}}) }}
 							{{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group">
-							{{ form_label(form.completedAt, "project.completedAt.label", {'label_attr': {'class': 'control-label'}}) }}
+							{{ form_label(form.completedAt, "Terminé le", {'label_attr': {'class': 'control-label'}}) }}
 							{{ form_widget(form.completedAt, {'attr': {'class': 'form-control'}}) }}
 						</div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">{{ 'modal.action.cancel.label'|trans }}</button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Annuler</button>
                     {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
                 </div>
                 {{ form_rest(form) }}
